@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"context"
 	"fmt"
 	"github.com/hvmidrezv/web-app/config"
 	"github.com/redis/go-redis/v9"
@@ -10,7 +11,7 @@ import (
 
 var redisClient *redis.Client
 
-func InitRedis(cfg *config.Config) {
+func InitRedis(cfg *config.Config) error {
 	redisClient = redis.NewClient(&redis.Options{
 		Addr:            fmt.Sprintf("%s:%s", cfg.Redis.Host, cfg.Redis.Port),
 		Password:        cfg.Redis.Password,
@@ -23,6 +24,11 @@ func InitRedis(cfg *config.Config) {
 		ConnMaxIdleTime: 500 * time.Millisecond,
 		ConnMaxLifetime: cfg.Redis.IdleCheckFrequency * time.Millisecond,
 	})
+	_, err := redisClient.Ping(context.Background()).Result()
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func GetRedis() *redis.Client {
