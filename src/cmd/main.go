@@ -5,7 +5,7 @@ import (
 	"github.com/hvmidrezv/web-app/config"
 	"github.com/hvmidrezv/web-app/data/cache"
 	"github.com/hvmidrezv/web-app/data/db"
-	"log"
+	"github.com/hvmidrezv/web-app/pkg/logging"
 )
 
 // @securityDefinitions.apikey AuthBearer
@@ -13,15 +13,16 @@ import (
 // @name Authorization
 func main() {
 	cfg := config.GetConfig()
+	logger := logging.NewLogger(cfg)
 	err := cache.InitRedis(cfg)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(logging.Redis, logging.Startup, err.Error(), nil)
 	}
 	defer cache.CloseRedis()
 
 	err = db.InitDb(cfg)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(logging.Postgres, logging.Startup, err.Error(), nil)
 	}
 	defer db.CloseDb()
 	api.InitServer(cfg)

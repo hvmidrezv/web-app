@@ -3,13 +3,14 @@ package db
 import (
 	"fmt"
 	"github.com/hvmidrezv/web-app/config"
+	"github.com/hvmidrezv/web-app/pkg/logging"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"log"
 	"time"
 )
 
 var dbClient *gorm.DB
+var logger = logging.NewLogger(config.GetConfig())
 
 func InitDb(cfg *config.Config) error {
 	cnn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s TimeZone=Asia/Tehran",
@@ -37,8 +38,7 @@ func InitDb(cfg *config.Config) error {
 	sqlDB.SetMaxOpenConns(cfg.Postgres.MaxOpenConns)
 	sqlDB.SetConnMaxLifetime(cfg.Postgres.ConnMaxLifetime * time.Minute)
 
-	log.Println("Connected to database")
-
+	logger.Info(logging.Postgres, logging.Startup, "Connected to database", nil)
 	return nil
 }
 
