@@ -5,6 +5,7 @@ import (
 	"github.com/hvmidrezv/web-app/config"
 	"github.com/hvmidrezv/web-app/data/cache"
 	"github.com/hvmidrezv/web-app/data/db"
+	"github.com/hvmidrezv/web-app/data/db/migrations"
 	"github.com/hvmidrezv/web-app/pkg/logging"
 )
 
@@ -25,6 +26,9 @@ func main() {
 		logger.Fatal(logging.Postgres, logging.Startup, err.Error(), nil)
 	}
 	defer db.CloseDb()
+
+	migrations.Up_1()
+
 	api.InitServer(cfg)
 
 }
