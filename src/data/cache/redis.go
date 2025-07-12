@@ -2,10 +2,10 @@ package cache
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/hvmidrezv/web-app/config"
 	"github.com/redis/go-redis/v9"
-
 	"time"
 )
 
@@ -20,10 +20,11 @@ func InitRedis(cfg *config.Config) error {
 		ReadTimeout:     cfg.Redis.ReadTimeout * time.Second,
 		WriteTimeout:    cfg.Redis.WriteTimeout * time.Second,
 		PoolSize:        cfg.Redis.PoolSize,
-		PoolTimeout:     cfg.Redis.PoolTimeout * time.Second,
+		PoolTimeout:     cfg.Redis.PoolTimeout,
 		ConnMaxIdleTime: 500 * time.Millisecond,
 		ConnMaxLifetime: cfg.Redis.IdleCheckFrequency * time.Millisecond,
 	})
+
 	_, err := redisClient.Ping(context.Background()).Result()
 	if err != nil {
 		return err
@@ -37,4 +38,25 @@ func GetRedis() *redis.Client {
 
 func CloseRedis() {
 	redisClient.Close()
+}
+
+func Set[T any](c *redis.Client, key string, value T, duration time.Duration) error {
+	v, err := json.Marshal(value)
+	if err != nil {
+		return err
+	}
+	return c.Set(context.Background(), key, v, duration).Err()
+}
+
+func Get[T any](c *redis.Client, key string) (T, error) {
+	var dest T = *new(T)
+	v, err := c.Get(context.Background(), key).Result()
+	if err != nil {
+		return dest, err
+	}
+	err = json.Unmarshal([]byte(v), &dest)
+	if err != nil {
+		return dest, err
+	}
+	return dest, nil
 }
