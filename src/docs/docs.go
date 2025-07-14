@@ -491,12 +491,10 @@ const docTemplate = `{
         "helper.BaseHttpResponse": {
             "type": "object",
             "properties": {
-                "error": {
-                    "type": "string"
-                },
+                "error": {},
                 "result": {},
                 "resultCode": {
-                    "$ref": "#/definitions/helper.ResultCode"
+                    "type": "integer"
                 },
                 "success": {
                     "type": "boolean"
@@ -508,31 +506,6 @@ const docTemplate = `{
                     }
                 }
             }
-        },
-        "helper.ResultCode": {
-            "type": "integer",
-            "enum": [
-                0,
-                40001,
-                40101,
-                40301,
-                40401,
-                42901,
-                42902,
-                50001,
-                50002
-            ],
-            "x-enum-varnames": [
-                "Success",
-                "ValidationError",
-                "AuthError",
-                "ForbiddenError",
-                "NotFoundError",
-                "LimiterError",
-                "OtpLimiterError",
-                "CustomRecovery",
-                "InternalError"
-            ]
         },
         "validation.ValidationError": {
             "type": "object",
