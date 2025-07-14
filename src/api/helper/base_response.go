@@ -1,26 +1,23 @@
 package helper
 
-import (
-	"fmt"
-	validation "github.com/hvmidrezv/web-app/api/validations"
-)
+import validation "github.com/hvmidrezv/web-app/api/validations"
 
 type BaseHttpResponse struct {
 	Result           any                           `json:"result"`
 	Success          bool                          `json:"success"`
-	ResultCode       ResultCode                    `json:"resultCode"`
+	ResultCode       int                           `json:"resultCode"`
 	ValidationErrors *[]validation.ValidationError `json:"validationErrors"`
-	Error            string                        `json:"error"`
+	Error            any                           `json:"error"`
 }
 
-func GenerateBaseResponse(result any, success bool, resultCode ResultCode) *BaseHttpResponse {
+func GenerateBaseResponse(result any, success bool, resultCode int) *BaseHttpResponse {
 	return &BaseHttpResponse{Result: result,
 		Success:    success,
 		ResultCode: resultCode,
 	}
 }
 
-func GenerateBaseResponseWithError(result any, success bool, resultCode ResultCode, err error) *BaseHttpResponse {
+func GenerateBaseResponseWithError(result any, success bool, resultCode int, err error) *BaseHttpResponse {
 	return &BaseHttpResponse{Result: result,
 		Success:    success,
 		ResultCode: resultCode,
@@ -29,15 +26,15 @@ func GenerateBaseResponseWithError(result any, success bool, resultCode ResultCo
 
 }
 
-func GenerateBaseResponseWithAnyError(result any, success bool, resultCode ResultCode, err any) *BaseHttpResponse {
+func GenerateBaseResponseWithAnyError(result any, success bool, resultCode int, err any) *BaseHttpResponse {
 	return &BaseHttpResponse{Result: result,
 		Success:    success,
 		ResultCode: resultCode,
-		Error:      fmt.Sprint(err),
+		Error:      err,
 	}
 }
 
-func GenerateBaseResponseWithValidationError(result any, success bool, resultCode ResultCode, err error) *BaseHttpResponse {
+func GenerateBaseResponseWithValidationError(result any, success bool, resultCode int, err error) *BaseHttpResponse {
 	return &BaseHttpResponse{Result: result,
 		Success:          success,
 		ResultCode:       resultCode,
