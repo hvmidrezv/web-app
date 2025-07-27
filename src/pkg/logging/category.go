@@ -12,7 +12,6 @@ const (
 	Redis           Category = "Redis"
 	Validation      Category = "Validation"
 	RequestResponse Category = "RequestResponse"
-	Prometheus      Category = "Prometheus"
 )
 
 const (
@@ -32,7 +31,6 @@ const (
 	Api                 SubCategory = "Api"
 	HashPassword        SubCategory = "HashPassword"
 	DefaultRoleNotFound SubCategory = "DefaultRoleNotFound"
-	FailedToCreateUser  SubCategory = "FailedToCreateUser"
 
 	// Validation
 	MobileValidation   SubCategory = "MobileValidation"
