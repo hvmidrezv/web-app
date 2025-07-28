@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"github.com/hvmidrezv/web-app/config"
 	"github.com/hvmidrezv/web-app/pkg/logging"
-	"io/ioutil"
+	"io"
 	"strings"
 	"time"
 
@@ -41,9 +41,9 @@ func structuredLogger(logger logging.Logger) gin.HandlerFunc {
 			path := c.FullPath()
 			raw := c.Request.URL.RawQuery
 
-			bodyBytes, _ := ioutil.ReadAll(c.Request.Body)
+			bodyBytes, _ := io.ReadAll(c.Request.Body)
 			c.Request.Body.Close()
-			c.Request.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
+			c.Request.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
 
 			c.Writer = blw
 			c.Next()
