@@ -6,8 +6,8 @@ import (
 	"github.com/hvmidrezv/web-app/config"
 )
 
-func Country(r *gin.RouterGroup, cfg *config.Config) {
-	h := handlers.NewCountryHandler(cfg)
+func CarType(r *gin.RouterGroup, cfg *config.Config) {
+	h := handlers.NewCarTypeHandler(cfg)
 
 	r.POST("/", h.Create)
 	r.PUT("/:id", h.Update)
@@ -16,8 +16,8 @@ func Country(r *gin.RouterGroup, cfg *config.Config) {
 	r.POST("/get-by-filter", h.GetByFilter)
 }
 
-func City(r *gin.RouterGroup, cfg *config.Config) {
-	h := handlers.NewCityHandler(cfg)
+func Gearbox(r *gin.RouterGroup, cfg *config.Config) {
+	h := handlers.NewGearboxHandler(cfg)
 
 	r.POST("/", h.Create)
 	r.PUT("/:id", h.Update)
@@ -26,18 +26,8 @@ func City(r *gin.RouterGroup, cfg *config.Config) {
 	r.POST("/get-by-filter", h.GetByFilter)
 }
 
-func File(r *gin.RouterGroup, cfg *config.Config) {
-	h := handlers.NewFileHandler(cfg)
-
-	r.POST("/", h.Create)
-	r.PUT("/:id", h.Update)
-	r.DELETE("/:id", h.Delete)
-	r.GET("/:id", h.GetById)
-	r.POST("/get-by-filter", h.GetByFilter)
-}
-
-func Company(r *gin.RouterGroup, cfg *config.Config) {
-	h := handlers.NewCompanyHandler(cfg)
+func CarModel(r *gin.RouterGroup, cfg *config.Config) {
+	h := handlers.NewCarModelHandler(cfg)
 
 	r.POST("/", h.Create)
 	r.PUT("/:id", h.Update)
