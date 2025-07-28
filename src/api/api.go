@@ -17,6 +17,8 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+var logger = logging.NewLogger(config.GetConfig())
+
 func InitServer(cfg *config.Config) {
 	r := gin.New()
 
@@ -30,7 +32,10 @@ func InitServer(cfg *config.Config) {
 	RegisterSwagger(r, cfg)
 	logger := logging.NewLogger(cfg)
 	logger.Info(logging.General, logging.Startup, "Started", nil)
-	r.Run(fmt.Sprintf(":%s", cfg.Server.InternalPort))
+	err := r.Run(fmt.Sprintf(":%s", cfg.Server.InternalPort))
+	if err != nil {
+		logger.Fatal(logging.General, logging.Startup, err.Error(), nil)
+	}
 }
 
 func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
@@ -50,6 +55,10 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		cities := v1.Group("/cities", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		files := v1.Group("/files", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 
+		// Property
+		properties := v1.Group("/properties", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+		propertyCategories := v1.Group("/property-categories", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
+
 		// Test
 		routers.Health(health)
 		routers.TestRouter(test_router)
@@ -62,6 +71,9 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		routers.City(cities, cfg)
 		routers.File(files, cfg)
 
+		// Property
+		routers.Property(properties, cfg)
+		routers.PropertyCategory(propertyCategories, cfg)
 	}
 
 	v2 := api.Group("/v2")
@@ -74,8 +86,14 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 func RegisterValidators() {
 	val, ok := binding.Validator.Engine().(*validator.Validate)
 	if ok {
-		val.RegisterValidation("mobile", validation.IranianMobileNumberValidator, true)
-		val.RegisterValidation("password", validation.PasswordValidator, true)
+		err := val.RegisterValidation("mobile", validation.IranianMobileNumberValidator, true)
+		if err != nil {
+			logger.Error(logging.Validation, logging.Startup, err.Error(), nil)
+		}
+		err = val.RegisterValidation("password", validation.PasswordValidator, true)
+		if err != nil {
+			logger.Error(logging.Validation, logging.Startup, err.Error(), nil)
+		}
 	}
 }
 

@@ -164,17 +164,17 @@ func createPropertyCategory(database *gorm.DB) {
 		Select("count(*)").
 		Find(&count)
 	if count == 0 {
-		database.Create(&models.PropertyCategory{Name: "Body"})                     // بدنه
-		database.Create(&models.PropertyCategory{Name: "Engine"})                   // موتور
-		database.Create(&models.PropertyCategory{Name: "Drivetrain"})               // پیشرانه
-		database.Create(&models.PropertyCategory{Name: "Suspension"})               // تعلیق
-		database.Create(&models.PropertyCategory{Name: "Equipment"})                // تجهیزات
-		database.Create(&models.PropertyCategory{Name: "Driver support systems"})   // سیستم های پشتیبانی راننده
-		database.Create(&models.PropertyCategory{Name: "Lights"})                   // چراغ ها
-		database.Create(&models.PropertyCategory{Name: "Multimedia"})               // چند رسانه ای
-		database.Create(&models.PropertyCategory{Name: "Safety equipment"})         // تجهیزات ایمنی
-		database.Create(&models.PropertyCategory{Name: "Seats and steering wheel"}) // صندلی و فرمان
-		database.Create(&models.PropertyCategory{Name: "Windows and mirrors"})      // پنجره و آینه
+		database.Create(&models.PropertyCategory{Name: "Body"})
+		database.Create(&models.PropertyCategory{Name: "Engine"})
+		database.Create(&models.PropertyCategory{Name: "Drivetrain"})
+		database.Create(&models.PropertyCategory{Name: "Suspension"})
+		database.Create(&models.PropertyCategory{Name: "Equipment"})
+		database.Create(&models.PropertyCategory{Name: "Driver support systems"})
+		database.Create(&models.PropertyCategory{Name: "Lights"})
+		database.Create(&models.PropertyCategory{Name: "Multimedia"})
+		database.Create(&models.PropertyCategory{Name: "Safety equipment"})
+		database.Create(&models.PropertyCategory{Name: "Seats and steering wheel"})
+		database.Create(&models.PropertyCategory{Name: "Windows and mirrors"})
 	}
 	createProperty(database, "Body")
 	createProperty(database, "Engine")
