@@ -15,6 +15,281 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v1/car-model-colors/": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Create a CarModelColor",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelColors"
+                ],
+                "summary": "Create a CarModelColor",
+                "parameters": [
+                    {
+                        "description": "Create a CarModelColor",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_dto.CreateCarModelColorRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "CarModelColor response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_dto.CarModelColorResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/car-model-colors/get-by-filter": {
+            "post": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get CarModelColors",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelColors"
+                ],
+                "summary": "Get CarModelColors",
+                "parameters": [
+                    {
+                        "description": "Request",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_dto.PaginationInputWithFilter"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CarModelColor response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_dto.PagedList-github_com_hvmidrezv_web-app_api_dto_CarModelColorResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/car-model-colors/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Get a CarModelColor",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelColors"
+                ],
+                "summary": "Get a CarModelColor",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CarModelColor response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_dto.CarModelColorResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Update a CarModelColor",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelColors"
+                ],
+                "summary": "Update a CarModelColor",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update a CarModelColor",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_dto.UpdateCarModelColorRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "CarModelColor response",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "result": {
+                                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_dto.CarModelColorResponse"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "AuthBearer": []
+                    }
+                ],
+                "description": "Delete a CarModelColor",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "CarModelColors"
+                ],
+                "summary": "Delete a CarModelColor",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "response",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_helper.BaseHttpResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/car-models/": {
             "post": {
                 "security": [
@@ -3126,9 +3401,26 @@ const docTemplate = `{
                 }
             }
         },
+        "github_com_hvmidrezv_web-app_api_dto.CarModelColorResponse": {
+            "type": "object",
+            "properties": {
+                "color": {
+                    "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_dto.ColorResponse"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            }
+        },
         "github_com_hvmidrezv_web-app_api_dto.CarModelResponse": {
             "type": "object",
             "properties": {
+                "carModelColors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_dto.CarModelColorResponse"
+                    }
+                },
                 "carType": {
                     "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_dto.CarTypeResponse"
                 },
@@ -3219,6 +3511,21 @@ const docTemplate = `{
                 },
                 "name": {
                     "type": "string"
+                }
+            }
+        },
+        "github_com_hvmidrezv_web-app_api_dto.CreateCarModelColorRequest": {
+            "type": "object",
+            "required": [
+                "carModelId",
+                "colorId"
+            ],
+            "properties": {
+                "carModelId": {
+                    "type": "integer"
+                },
+                "colorId": {
+                    "type": "integer"
                 }
             }
         },
@@ -3462,6 +3769,32 @@ const docTemplate = `{
                 "username": {
                     "type": "string",
                     "minLength": 5
+                }
+            }
+        },
+        "github_com_hvmidrezv_web-app_api_dto.PagedList-github_com_hvmidrezv_web-app_api_dto_CarModelColorResponse": {
+            "type": "object",
+            "properties": {
+                "hasNextPage": {
+                    "type": "boolean"
+                },
+                "hasPreviousPage": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_hvmidrezv_web-app_api_dto.CarModelColorResponse"
+                    }
+                },
+                "pageNumber": {
+                    "type": "integer"
+                },
+                "totalPages": {
+                    "type": "integer"
+                },
+                "totalRows": {
+                    "type": "integer"
                 }
             }
         },
@@ -3852,6 +4185,17 @@ const docTemplate = `{
                 },
                 "sort": {
                     "type": "string"
+                }
+            }
+        },
+        "github_com_hvmidrezv_web-app_api_dto.UpdateCarModelColorRequest": {
+            "type": "object",
+            "properties": {
+                "carModelId": {
+                    "type": "integer"
+                },
+                "colorId": {
+                    "type": "integer"
                 }
             }
         },
