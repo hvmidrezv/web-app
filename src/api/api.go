@@ -9,13 +9,13 @@ import (
 	"github.com/hvmidrezv/web-app/docs"
 	"github.com/hvmidrezv/web-app/pkg/logging"
 	"github.com/hvmidrezv/web-app/pkg/metrics"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -77,6 +77,7 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		carModelImages := v1.Group("/car-model-images", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		carModelProperties := v1.Group("/car-model-properties", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin"}))
 		carModelComments := v1.Group("/car-model-comments", middlewares.Authentication(cfg), middlewares.Authorization([]string{"admin", "default"}))
+
 		// Test
 		routers.Health(health)
 		routers.TestRouter(test_router)
@@ -110,7 +111,6 @@ func RegisterRoutes(r *gin.Engine, cfg *config.Config) {
 		r.Static("/static", "./uploads")
 
 		r.GET("/metrics", gin.WrapH(promhttp.Handler()))
-
 	}
 
 	v2 := api.Group("/v2")
