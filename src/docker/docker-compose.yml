@@ -131,7 +131,6 @@ services:
       - "6379:6379"
     networks:
       - webapi_network
-
   ##################### Monitoring #################
   prometheus:
     image: prom/prometheus:latest
@@ -207,6 +206,8 @@ volumes:
   logs:
   setup:
   elasticsearch:
+  prometheus_data:
+  grafana_data:
 
 networks:
   webapi_network:
